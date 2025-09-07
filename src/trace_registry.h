@@ -4,15 +4,18 @@
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
+#include <chrono>
 
 namespace simpletrace {
 
 using event_id_t = uint16_t;
 
-enum class dtype_t { i32, i64, f32, f64, timestamp };
+enum class scope_token_t : uint8_t { beg, end };
+enum class dtype_t : uint8_t { i32, i64, f32, f64, timestamp, string_view, scope_token};
 
+/*Have to use underlying rep because timestamp is not layout stable.*/
 struct timestamp_t {
-  int64_t value;
+  std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>::rep dur;
 };
 
 template <typename T> struct dtype_of;
@@ -31,6 +34,12 @@ template <> struct dtype_of<double> {
 };
 template <> struct dtype_of<timestamp_t> {
   static constexpr dtype_t value = dtype_t::timestamp;
+};
+template <> struct dtype_of<std::string_view> {
+  static constexpr dtype_t value = dtype_t::string_view;
+};
+template <> struct dtype_of<scope_token_t> {
+  static constexpr dtype_t value = dtype_t::scope_token;
 };
 
 struct field_layout_t {
