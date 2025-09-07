@@ -12,8 +12,8 @@ SRCS += $(wildcard src/*.cpp)
 OBJS = $(SRCS:.cpp=.o)
 DEPS += $(SRCS:.cpp=.d)
 
-
-
+#So that we have std::span. You can override this with higher C++ if you like.
+CXXFLAGS ?= --std=c++20
 
 LDFLAGS += -L.
 CXXFLAGS += -I./third_party
