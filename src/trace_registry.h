@@ -15,7 +15,9 @@ enum class dtype_t : uint8_t { i32, i64, f32, f64, timestamp, string_view, scope
 
 /*Have to use underlying rep because timestamp is not layout stable.*/
 struct timestamp_t {
+  using timepoint_t=std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>;
   std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>::rep dur;
+  timepoint_t timepoint() const noexcept;
 };
 
 template <typename T> struct dtype_of;
