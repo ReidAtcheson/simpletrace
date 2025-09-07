@@ -9,3 +9,6 @@ This is more of a simple library to help with my own tracing needs within person
 1. extremely lightweight binary logging that could multipurpose as tracing 
 2. a very simple schema that could allow logs to be extracted to sqlite, tabular format, etc
 3. tiny overhead if runtime disabled, and compile-time-disable for zero overhead.
+
+The idea being that basic tracing is supported, but that we could add arbitrary data on an ad-hoc
+basis that could be immediately understood by consumers (trace sinks & writers).
