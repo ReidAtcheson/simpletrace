@@ -47,3 +47,6 @@
     inline static const ::simpletrace::event_id_t event_id =                   \
         ::simpletrace::trace_registry_t::instance().register_type<name>();     \
   };
+
+
+
