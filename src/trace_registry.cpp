@@ -4,6 +4,11 @@
 
 namespace simpletrace {
 
+
+timestamp_t::timepoint_t timestamp_t::timepoint() const noexcept{
+  return timepoint_t(timepoint_t::duration(dur));
+}
+
 trace_registry_t &trace_registry_t::instance() {
   static trace_registry_t r;
   return r;
