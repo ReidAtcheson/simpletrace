@@ -3,11 +3,11 @@
 
 using namespace simpletrace;
 
-#define EVENT_A_FIELDS(X) X(int32_t, value, dtype_t::i32)
+#define EVENT_A_FIELDS(X) X(int32_t, value)
 
 SIMPLETRACE_EVENT_STRUCT(event_a_t, EVENT_A_FIELDS)
 
-#define EVENT_B_FIELDS(X) X(int64_t, timestamp, dtype_t::timestamp)
+#define EVENT_B_FIELDS(X) X(timestamp_t, timestamp)
 
 SIMPLETRACE_EVENT_STRUCT_STATIC(event_b_t, EVENT_B_FIELDS)
 

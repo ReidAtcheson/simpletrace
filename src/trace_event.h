@@ -4,10 +4,10 @@
 
 #include "trace_registry.h"
 
-#define SIMPLETRACE_FIELD_DECL(type, name, dtype) type name;
-#define SIMPLETRACE_FIELD_LAYOUT(type, name, dtype)                            \
-  ::simpletrace::field_layout_t{#name, dtype, offsetof(__trace_this_t, name),  \
-                                sizeof(type)},
+#define SIMPLETRACE_FIELD_DECL(type, name) type name;
+#define SIMPLETRACE_FIELD_LAYOUT(type, name)                                   \
+  ::simpletrace::field_layout_t{#name, ::simpletrace::dtype_of<type>::value,   \
+                                offsetof(__trace_this_t, name), sizeof(type)},
 #define SIMPLETRACE_EVENT_STRUCT(name, FIELDS)                                 \
   struct name {                                                                \
     FIELDS(SIMPLETRACE_FIELD_DECL)                                             \
