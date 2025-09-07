@@ -67,6 +67,7 @@ public:
   template <typename T> event_id_t register_type() {
     return register_index_schema(std::type_index(typeid(T)), T::schema());
   }
+  const schema_t& schema(const event_id_t id) const;
 
 private:
   std::unordered_map<std::type_index, event_id_t> events_;

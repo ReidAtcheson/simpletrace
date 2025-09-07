@@ -1,10 +1,17 @@
 #include "trace_registry.h"
 
+#include <cassert>
+
 namespace simpletrace {
 
 trace_registry_t &trace_registry_t::instance() {
   static trace_registry_t r;
   return r;
+}
+
+const schema_t& trace_registry_t::schema(const event_id_t id) const{
+  assert(id<schemas_.size());
+  return schemas_[id];
 }
 
 event_id_t trace_registry_t::register_index_schema(const std::type_index ti,
