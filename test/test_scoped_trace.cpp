@@ -1,5 +1,6 @@
 #include "acutest.h"
 #include "scoped_trace.h"
+#include "thread_local_writer.h"
 #include <vector>
 
 using namespace simpletrace;
@@ -18,11 +19,11 @@ struct vector_writer_t : trace_writer_t {
 
 void test_scoped_trace_basic() {
   vector_writer_t writer;
-  tls_writer = &writer;
+  impl::set_tls_writer(&writer);
   {
     SIMPLETRACE_SCOPED_TRACE("hello"sv);
   }
-  tls_writer = nullptr;
+  impl::set_tls_writer(nullptr);
   TEST_CHECK(writer.events.size() == 2);
   TEST_CHECK(writer.events[0].token == scope_token_t::beg);
   TEST_CHECK(writer.events[1].token == scope_token_t::end);
