@@ -16,7 +16,7 @@ DEPS += $(SRCS:.cpp=.d)
 CXXFLAGS ?= --std=c++20
 
 LDFLAGS += -L.
-CXXFLAGS += -I./third_party
+CXXFLAGS += -I./third_party -I./src
 
 
 -include $(TEST_DEPS)

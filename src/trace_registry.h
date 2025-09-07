@@ -11,6 +11,28 @@ using event_id_t = uint16_t;
 
 enum class dtype_t { i32, i64, f32, f64, timestamp };
 
+struct timestamp_t {
+  int64_t value;
+};
+
+template <typename T> struct dtype_of;
+
+template <> struct dtype_of<int32_t> {
+  static constexpr dtype_t value = dtype_t::i32;
+};
+template <> struct dtype_of<int64_t> {
+  static constexpr dtype_t value = dtype_t::i64;
+};
+template <> struct dtype_of<float> {
+  static constexpr dtype_t value = dtype_t::f32;
+};
+template <> struct dtype_of<double> {
+  static constexpr dtype_t value = dtype_t::f64;
+};
+template <> struct dtype_of<timestamp_t> {
+  static constexpr dtype_t value = dtype_t::timestamp;
+};
+
 struct field_layout_t {
   std::string_view name;
   dtype_t dtype;
