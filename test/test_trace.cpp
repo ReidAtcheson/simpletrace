@@ -17,8 +17,9 @@ void test_event_lazy() {
 }
 
 void test_event_eager() {
-  event_id_t id1 = event_b_t::event_id();
-  TEST_CHECK(id1 == event_b_t::event_id());
+  event_id_t id1 = event_b_t::event_id;
+  event_id_t id2 = trace_registry_t::instance().register_type<event_b_t>();
+  TEST_CHECK(id1 == id2);
 }
 
 TEST_LIST = {{"test_event_lazy", test_event_lazy},

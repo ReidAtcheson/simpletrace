@@ -44,9 +44,6 @@
           {FIELDS(SIMPLETRACE_FIELD_LAYOUT)}};                                 \
       return s;                                                                \
     }                                                                          \
-    static ::simpletrace::event_id_t event_id() {                              \
-      static const ::simpletrace::event_id_t cached =                          \
-          ::simpletrace::trace_registry_t::instance().register_type<name>();   \
-      return cached;                                                           \
-    }                                                                          \
+    inline static const ::simpletrace::event_id_t event_id =                   \
+        ::simpletrace::trace_registry_t::instance().register_type<name>();     \
   };
