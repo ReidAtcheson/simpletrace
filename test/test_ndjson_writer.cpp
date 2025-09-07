@@ -17,16 +17,16 @@ static std::span<const std::byte> as_bytes(const test_event_t &e) {
 
 void test_ndjson_flush() {
   const auto &schema =
-      trace_registry_t::instance().schema(test_event_t::event_id());
+      trace_registry_t::instance().schema(test_event_t::event_id);
   const size_t bytes_for_one = sizeof(event_id_t) + schema.size + schema.align;
   auto tmp = std::filesystem::temp_directory_path() / "simpletrace_test.ndjson";
   std::filesystem::remove(tmp);
   ndjson_trace_writer_t w(tmp.string(), bytes_for_one);
 
   test_event_t e1{.value = 1};
-  w.write(test_event_t::event_id(), as_bytes(e1));
+  w.write(test_event_t::event_id, as_bytes(e1));
   test_event_t e2{.value = 2};
-  w.write(test_event_t::event_id(), as_bytes(e2));
+  w.write(test_event_t::event_id, as_bytes(e2));
   w.flush();
 
   std::ifstream in(tmp);

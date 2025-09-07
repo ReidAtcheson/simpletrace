@@ -8,6 +8,6 @@ namespace simpletrace {
   X(std::string_view, label)                                                   \
   X(timestamp_t, timestamp)
 
-SIMPLETRACE_EVENT_STRUCT_STATIC(scope_trace_event_t, TRACE_SCOPE_EVENT_FIELDS)
+SIMPLETRACE_EVENT_STRUCT(scope_trace_event_t, TRACE_SCOPE_EVENT_FIELDS)
 
 } // namespace simpletrace
