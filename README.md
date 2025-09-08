@@ -23,15 +23,17 @@ basis that could be immediately understood by consumers (trace sinks & writers).
 int main() {
   using namespace simpletrace;
   ndjson_trace_writer_t writer{"trace.json", 1 << 20};
-  impl::set_tls_writer(&writer);
-  {
-    SIMPLETRACE_SCOPED_TRACE("doing work");
-    // ... your code ...
-  }
-  writer.flush();
+    impl::set_tls_writer(&writer);
+    {
+      SIMPLETRACE_SCOPED_TRACE("doing work");
+      // ... your code ...
+    }
+    writer.flush();
 }
 ```
-This writes a beginning and end `scope_trace_event_t` for the labeled block.
+This writes a beginning and end `scope_trace_event_t` for the labeled block. The
+label must be a string literal (or other static storage string) so no string
+data is copied.
 
 If the output file cannot be opened or the stream is otherwise invalid during
 construction, `ndjson_trace_writer_t` throws a `std::runtime_error`.
