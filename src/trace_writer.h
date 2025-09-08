@@ -14,7 +14,7 @@ public:
   /*Can write a concept for T.*/
   template <typename T> void write_type(const T &x) {
     write(T::event_id, std::span<const std::byte>(
-                           reinterpret_cast<const std::byte *>(&x, sizeof(T))));
+                           reinterpret_cast<const std::byte *>(&x), sizeof(T)));
   }
 };
 
