@@ -1,5 +1,6 @@
 #include "ndjson_trace_writer.h"
 
+#include <cassert>
 #include <limits>
 #include <stdexcept>
 #include <string_view>
@@ -21,7 +22,8 @@ void ndjson_trace_writer_t::write(const event_id_t event,
   if (!buffer_.buffer(event, data)) {
     flush_buffer();
     buffer_.reset();
-    buffer_.buffer(event, data);
+    bool buffered = buffer_.buffer(event, data);
+    assert(buffered);
   }
 }
 
