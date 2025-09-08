@@ -76,10 +76,38 @@ void ndjson_trace_writer_t::write_event(
 std::string ndjson_trace_writer_t::escape_string(std::string_view sv) {
   std::string out;
   out.reserve(sv.size());
-  for (char c : sv) {
-    if (c == '"' || c == '\\')
-      out.push_back('\\');
-    out.push_back(c);
+  for (unsigned char c : sv) {
+    switch (c) {
+    case '"':
+      out += "\\\"";
+      break;
+    case '\\':
+      out += "\\\\";
+      break;
+    case '\b':
+      out += "\\b";
+      break;
+    case '\f':
+      out += "\\f";
+      break;
+    case '\n':
+      out += "\\n";
+      break;
+    case '\r':
+      out += "\\r";
+      break;
+    case '\t':
+      out += "\\t";
+      break;
+    default:
+      if (c < 0x20) {
+        static const char hex[] = "0123456789abcdef";
+        char buf[7] = {'\\', 'u', '0', '0', hex[c >> 4], hex[c & 0xf], '\0'};
+        out.append(buf, 6);
+      } else {
+        out.push_back(static_cast<char>(c));
+      }
+    }
   }
   return out;
 }
