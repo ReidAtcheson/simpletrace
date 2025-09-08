@@ -33,6 +33,9 @@ int main() {
 ```
 This writes a beginning and end `scope_trace_event_t` for the labeled block.
 
+If the output file cannot be opened or the stream is otherwise invalid during
+construction, `ndjson_trace_writer_t` throws a `std::runtime_error`.
+
 ### Custom events
 Define a struct with the provided macros to describe the fields of the event.
 ```c++

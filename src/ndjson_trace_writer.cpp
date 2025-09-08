@@ -1,13 +1,18 @@
 #include "ndjson_trace_writer.h"
 
 #include <limits>
+#include <stdexcept>
 #include <string_view>
 
 namespace simpletrace {
 
 ndjson_trace_writer_t::ndjson_trace_writer_t(const std::string &filename,
                                              size_t buffer_bytes)
-    : out_(filename), buffer_(buffer_bytes) {}
+    : out_(filename), buffer_(buffer_bytes) {
+  if (!out_.is_open() || !out_.good()) {
+    throw std::runtime_error("failed to open file " + filename);
+  }
+}
 
 ndjson_trace_writer_t::~ndjson_trace_writer_t() { flush(); }
 
