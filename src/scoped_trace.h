@@ -14,17 +14,11 @@ class scoped_trace_t {
 public:
   template <std::size_t N>
   scoped_trace_t(trace_writer_t *writer, const char (&label)[N])
-      : writer_(writer), label_(label, N - 1), start_(impl::now_timestamp()) {
-    if (writer_) {
-      scope_trace_event_t ev{scope_token_t::beg, label_, start_};
-      writer_->write(scope_trace_event_t::event_id,
-                     std::span<const std::byte>(
-                         reinterpret_cast<const std::byte *>(&ev), sizeof(ev)));
-    }
-  }
+      : scoped_trace_t(writer, std::string_view(label, N - 1)) {}
   ~scoped_trace_t();
 
 private:
+  scoped_trace_t(trace_writer_t *writer, std::string_view label);
   trace_writer_t *writer_;
   std::string_view label_;
   timestamp_t start_;
