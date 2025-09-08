@@ -1,5 +1,6 @@
 #pragma once
 #include "trace_event.h"
+#include <string_view>
 
 namespace simpletrace {
 

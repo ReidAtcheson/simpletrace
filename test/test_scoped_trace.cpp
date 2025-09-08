@@ -1,10 +1,17 @@
 #include "acutest.h"
 #include "scoped_trace.h"
 #include "thread_local_writer.h"
+#include <string>
+#include <type_traits>
 #include <vector>
 
 using namespace simpletrace;
 using namespace std::literals;
+
+static_assert(!std::is_constructible_v<scoped_trace_t, trace_writer_t *,
+                                       std::string_view>);
+static_assert(
+    !std::is_constructible_v<scoped_trace_t, trace_writer_t *, std::string>);
 
 struct vector_writer_t : trace_writer_t {
   std::vector<scope_trace_event_t> events;
@@ -21,7 +28,7 @@ void test_scoped_trace_basic() {
   vector_writer_t writer;
   impl::set_tls_writer(&writer);
   {
-    SIMPLETRACE_SCOPED_TRACE("hello"sv);
+    SIMPLETRACE_SCOPED_TRACE("hello");
   }
   impl::set_tls_writer(nullptr);
   TEST_CHECK(writer.events.size() == 2);
