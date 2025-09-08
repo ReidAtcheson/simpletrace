@@ -14,7 +14,6 @@ public:
 private:
   trace_writer_t *writer_;
   std::string_view label_;
-  timestamp_t start_;
 };
 
 #define SIMPLETRACE_CONCAT_INNER(x, y) x##y

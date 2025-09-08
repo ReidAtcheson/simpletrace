@@ -13,9 +13,10 @@ timestamp_t now_timestamp() {
 } // namespace
 
 scoped_trace_t::scoped_trace_t(trace_writer_t *writer, std::string_view label)
-    : writer_(writer), label_(label), start_(now_timestamp()) {
+    : writer_(writer), label_(label) {
   if (writer_) {
-    scope_trace_event_t ev{scope_token_t::beg, label_, start_};
+    timestamp_t start = now_timestamp();
+    scope_trace_event_t ev{scope_token_t::beg, label_, start};
     writer_->write(scope_trace_event_t::event_id,
                    std::span<const std::byte>(
                        reinterpret_cast<const std::byte *>(&ev), sizeof(ev)));
