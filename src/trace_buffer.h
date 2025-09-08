@@ -19,7 +19,8 @@ public:
     size_t events_remaining;
   };
   trace_buffer_t(const size_t bytes);
-  bool buffer(const event_id_t event, std::span<const std::byte> data) noexcept;
+  [[nodiscard]] bool buffer(const event_id_t event,
+                            std::span<const std::byte> data) noexcept;
   drained_event_t drain_single();
 
   void reset();
